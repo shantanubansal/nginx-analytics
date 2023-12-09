@@ -24,7 +24,7 @@ jobs:
         fi
         
         # Add the current date to README.md
-        echo "Updated on $(date +"%Y-%m-%d")" >> README.md
+        echo "GitHub Action Test Workflow. Updated on $(date +"%Y-%m-%d")" >> README.md
 
     - name: Commit and push if changes
       run: |
