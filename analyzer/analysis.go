@@ -7,6 +7,7 @@ import (
 type AnalysisResults struct {
 	RepetitiveRequestCount              int
 	RepetitiveRequestStatusCount        map[string]int
+	RepetitiveRequestsCount             map[string]int
 	RepetitiveRequestErrorCodeCount     map[string]int
 	RepetitiveRequestErrorCodeUserCount map[string]int
 	RequestTimeStats                    map[string]RequestTimeStat
@@ -68,6 +69,7 @@ func AnalyzeLogEntries(logEntries []LogEntry) *AnalysisResults {
 		}
 		results.RequestTimeStats[request] = stat
 	}
+	results.RepetitiveRequestsCount = requestCount
 
 	return results
 }
