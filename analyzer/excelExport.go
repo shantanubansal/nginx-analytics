@@ -12,6 +12,7 @@ func ExportToExcel(results AnalysisResults, fileName string) error {
 	createRepetitiveRequestErrorCodeCountSheet(f, results)
 	createRepetitiveRequestErrorCodeUserCountSheet(f, results)
 	createRequestTimeStatsSheet(f, results)
+	createRepetitiveRequestsSheet(f, results)
 	if err := f.SaveAs(fileName); err != nil {
 		return fmt.Errorf("failed to save excel file: %v", err)
 	}
@@ -23,6 +24,20 @@ func createRepetitiveRequestCountSheet(f *excelize.File, results AnalysisResults
 	f.NewSheet(sheetName)
 	f.SetCellValue(sheetName, "A1", "Total Repetitive Requests")
 	f.SetCellValue(sheetName, "B1", results.RepetitiveRequestCount)
+}
+
+func createRepetitiveRequestsSheet(f *excelize.File, results AnalysisResults) {
+	sheetName := "Repetitive Requests Count"
+	f.NewSheet(sheetName)
+	f.SetCellValue(sheetName, "A1", "Request ")
+	f.SetCellValue(sheetName, "B1", "Count")
+
+	row := 2
+	for key, count := range results.RepetitiveRequestStatusCount {
+		f.SetCellValue(sheetName, fmt.Sprintf("A%d", row), key)
+		f.SetCellValue(sheetName, fmt.Sprintf("B%d", row), count)
+		row++
+	}
 }
 
 func createRepetitiveRequestStatusCountSheet(f *excelize.File, results AnalysisResults) {
